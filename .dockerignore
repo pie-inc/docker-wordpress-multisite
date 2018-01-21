@@ -1,0 +1,5 @@
+*
+!code/themes
+!code/plugins
+!data/php/multisite.htaccess
+!data/php/docker-entrypoint.sh

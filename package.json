@@ -1,0 +1,87 @@
+{
+  "name": "docker-wordpress-multisite",
+  "version": "0.0.1",
+  "author": "J Lopes <mail@jlopes.eu>",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose up -d; open http://wordpress.local; webpack --watch",
+    "add:hosts": "sudo -- sh -c -e \"echo '127.0.0.1 wordpress.local' >> /etc/hosts\""
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.9",
+    "css-mqpacker": "^6.0.1",
+    "eslint-config-standard": "^10.2.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-loader": "^2.0.10",
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-notifier": "^1.5.1"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "postCSS": {
+    "parser": "sugarss",
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          "last 3 versions"
+        ]
+      },
+      "postcss-import": {},
+      "postcss-cssnext": {
+        "browsers": [
+          "last 3 versions"
+        ]
+      },
+      "cssnano": {}
+    }
+  },
+  "esLintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "rules": {
+      "semi": 2
+    }
+  },
+  "stylelint": {
+    "rules": {
+      "block-no-empty": null,
+      "color-no-invalid-hex": true,
+      "comment-empty-line-before": [
+        "always"
+      ],
+      "declaration-colon-space-after": "always",
+      "indentation": [
+        2,
+        {
+          "except": [
+            "value"
+          ]
+        }
+      ],
+      "max-empty-lines": 2,
+      "rule-empty-line-before": [
+        "always",
+        {
+          "except": [
+            "first-nested"
+          ],
+          "ignore": [
+            "after-comment"
+          ]
+        }
+      ]
+    }
+  }
+}
