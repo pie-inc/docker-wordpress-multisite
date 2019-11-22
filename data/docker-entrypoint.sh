@@ -126,11 +126,7 @@ EOPHP
 			echo "$@" | sed -e 's/[\/&]/\\&/g'
 		}
 		php_escape() {
-			local escaped="$(php -r 'var_export(('"$2"') $argv[1]);' -- "$1")"
-			if [ "$2" = 'string' ] && [ "${escaped:0:1}" = "'" ]; then
-				escaped="${escaped//$'\n'/"' + \"\\n\" + '"}"
-			fi
-			echo "$escaped"
+			php -r 'var_export(('$2') $argv[1]);' -- "$1"
 		}
 		set_config() {
 			key="$1"
@@ -220,12 +216,35 @@ EOPHP
 	done
 fi
 
-# if [ -z "${WORDPRESS_LOCAL_DEV+x}" ]; then
-#   wp --allow-root core multisite-convert
-#   mv .htaccess backup.htaccess
-#   mv multisite.htaccess .htaccess
-#   wp --allow-root search-replace "/blog/%year%/%monthnum%/%day%/%postname%/" "/%postname%" wp_options
-#   wp --allow-root rewrite flush
-# fi
+if [ -z "${WORDPRESS_LOCAL_DEV+x}" ] && [ ! -f backup.htaccess ]; then
+  wp core is-installed || wp core multisite-install --skip-config --title="test" --admin_email="joao.lopes@test.com"
+  mv .htaccess backup.htaccess
+  mv multisite.htaccess .htaccess
+  wp search-replace "/blog/%year%/%monthnum%/%day%/%postname%/" "blog/%postname%" wp_options
+  wp rewrite flush
+fi
+
+if [ -d "/var/www/html/wp-content/uploads/cache" ]; then
+	chown -R www-data:www-data /var/www/html/wp-content/uploads/cache
+fi
+if [ -d "/var/www/html/wp-content/cache" ]; then
+	chown -R www-data:www-data /var/www/html/wp-content/cache
+fi
+
+
+if [ -d "/var/www/html/wp-content/uploads/cache" ]; then
+	chown -R www-data:www-data /var/www/html/wp-content/uploads/cache
+fi
+if [ -d "/var/www/html/wp-content/cache" ]; then
+	chown -R www-data:www-data /var/www/html/wp-content/cache
+fi
+
+
+	sed -i "/stop editing/i \
+\@ini_set('session.cookie_httponly', true);\n \
+\@ini_set('session.cookie_secure', true);\n \
+\@ini_set('session.use_only_cookies', true);\n \
+define('WP_MEMORY_LIMIT', '256M');\n \
+define( 'WP_MAX_MEMORY_LIMIT', '256M' );" wp-config.php
 
 exec "$@"

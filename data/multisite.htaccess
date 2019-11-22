@@ -1,11 +1,11 @@
-# BEGIN WordPress
-<IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 
-# uploaded files
-RewriteRule ^([_0-9a-zA-Z-]+/)?files/(.+) wp-includes/ms-files.php?file=$2 [L]
+# Allow access from all domains for webfonts.
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|webmanifest)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
 
 # add a trailing slash to /wp-admin
 RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]
@@ -16,5 +16,3 @@ RewriteRule ^ - [L]
 RewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) $2 [L]
 RewriteRule ^([_0-9a-zA-Z-]+/)?(.*\.php)$ $2 [L]
 RewriteRule . index.php [L]
-</IfModule>
-# END WordPress

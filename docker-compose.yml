@@ -1,56 +1,56 @@
 version: "2"
-
 services:
-  db:
-    image: mariadb:latest
-    restart: always
-    environment:
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_ROOT_PASSWORD=wordpress
-      - MYSQL_USER=root
-    ports:
-      - "13306:3306"
-    networks:
-      - wordpress-network
-    volumes:
-      - ./data/db/.db/mysql:/var/lib/mysql:rw
-      - ./data/db/:/data/mysql:rw
-
   wp:
     build:
       context: ./
       dockerfile: Dockerfile
-    volumes:
-      - ./data/wordpress:/var/www/html:rw
-      - ./code/themes:/var/www/html/wp-content/themes:rw
-      - ./code/plugins:/var/www/html/wp-content/plugins:rw
-      - ./data/uploads:/var/www/html/wp-content/uploads:rw
-    environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_NAME=wordpress
-      - WORDPRESS_DB_USER=root
-      - WORDPRESS_DB_PASSWORD=wordpress
-    restart: always
-    depends_on:
-      - db
-    networks:
-      - wordpress-network
-  nginx:
-    image: nginx:latest
     ports:
       - "8080:80"
+    volumes:
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins:rw
+      - ./wp-content/themes:/var/www/html/wp-content/themes:rw
+      - ./data/wordpress:/var/www/html:rw
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_NAME=test
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_PASSWORD=test
+      - WORDPRESS_LOCAL_DEV=true
+    restart: always
+    networks:
+      - test-network
+
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./data/mysql/.db/mysql:/var/lib/mysql:rw
+      - ./data/mysql/:/data/mysql:rw
+    environment:
+      - MYSQL_DATABASE=test
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_USER=root
+    ports:
+      - "13303:3306"
+    networks:
+      - test-network
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "8081:80"
       - "443:443"
     depends_on:
       - wp
     volumes:
-      - ./data/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./data/nginx/wordpress.conf:/etc/nginx/conf.d/default.conf
       - ./data/certs:/etc/nginx/certs/
       - ./data/nginx/log:/var/log/nginx/
       - ./data/wordpress:/var/www/html
-      - ./code/themes:/var/www/html/wp-content/themes:rw
-      - ./code/plugins:/var/www/html/wp-content/plugins:rw
+      - ./wp-content:/var/www/html/wp-content:rw
     networks:
-      - wordpress-network
+      - test-network
 networks:
-    wordpress-network:
-        driver: bridge
+  test-network:
+    driver: bridge

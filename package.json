@@ -1,57 +1,87 @@
 {
   "name": "docker-wordpress-multisite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "J Lopes <mail@jlopes.eu>",
   "main": "index.js",
   "scripts": {
-    "start": "docker-compose up -d; open http://wordpress.local; webpack --watch",
-    "add:hosts": "sudo -- sh -c -e \"echo '127.0.0.1 wordpress.local' >> /etc/hosts\""
+    "start": "npm run serve && npm run watch",
+    "serve": "docker-compose up -d",
+    "stop": "docker-compose down --remove-orphans",
+    "watch": "webpack --mode development --watch",
+    "build": "webpack --mode production",
+    "reset": "rm -rf ./data/mysql/.db"
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "css-loader": "^0.28.9",
-    "css-mqpacker": "^6.0.1",
-    "eslint-config-standard": "^10.2.1",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-loader": "^2.0.10",
-    "style-loader": "^0.19.1",
-    "webpack": "^3.10.0",
-    "webpack-notifier": "^1.5.1"
+    "@babel/core": "^7.0.0-beta.47",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.53",
+    "@babel/plugin-transform-for-of": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.0-beta.3",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^0.28.11",
+    "css-mqpacker": "^6.0.2",
+    "custom-event-polyfill": "^1.0.6",
+    "es6-promise": "^4.2.6",
+    "eslint": "^5.6.0",
+    "eslint-loader": "^2.1.1",
+    "file-loader": "^1.1.11",
+    "husky": "^1.0.0",
+    "import-glob": "^1.5.0",
+    "lost": "^8.2.1",
+    "mini-css-extract-plugin": "^0.4.1",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "plyr": "^3.5.3",
+    "postcss-clean": "^1.1.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-custom-properties": "^7.0.0",
+    "postcss-extend": "^1.0.5",
+    "postcss-import": "^11.1.0",
+    "postcss-loader": "^2.1.5",
+    "sass-loader": "^7.3.1",
+    "style-loader": "^0.21.0",
+    "svgo": "^1.0.5",
+    "svgo-loader": "^2.1.0",
+    "terser-webpack-plugin": "^1.2.1",
+    "url-polyfill": "^1.1.3",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-notifier": "^1.6.0",
+    "webpackbar": "^3.1.5"
   },
   "babel": {
     "presets": [
-      "env"
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry",
+          "shippedProposals": true
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-transform-for-of"
     ]
   },
-  "postCSS": {
-    "parser": "sugarss",
-    "plugins": {
-      "autoprefixer": {
-        "browsers": [
-          "last 3 versions"
-        ]
-      },
-      "postcss-import": {},
-      "postcss-cssnext": {
-        "browsers": [
-          "last 3 versions"
-        ]
-      },
-      "cssnano": {}
-    }
-  },
-  "esLintConfig": {
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
     "parserOptions": {
-      "ecmaVersion": 6,
       "sourceType": "module"
     },
     "rules": {
-      "semi": 2
+      "semi": [
+        2,
+        "always"
+      ]
     }
   },
   "stylelint": {

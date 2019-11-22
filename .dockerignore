@@ -1,5 +1,11 @@
 *
-!code/themes
-!code/plugins
-!data/php/multisite.htaccess
-!data/php/docker-entrypoint.sh
+wp-content/themes/**/src
+!wp-content/themes
+!wp-content/plugins
+!data/docker-entrypoint.sh
+!data/.well-known
+!data/wpcli-user.sh
+!data/cron.conf
+!data/multisite.htaccess
+!data/uploads.ini
+
