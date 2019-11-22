@@ -1,5 +1,5 @@
-# Docker wordpress Multisite
-- [Docker wordpress Multisite](#docker-wordpress-multisite)
+# Docker WordPress Multisite
+- [Docker WordPress Multisite](#docker-wordpress-multisite)
   - [Pre-requisites](#pre-requisites)
   - [Getting started](#getting-started)
     - [Enabling multisite](#enabling-multisite)
@@ -47,7 +47,7 @@ mv multisite.htaccess .htaccess
 ### local SSL Certificates
 You will need install makecert.
 
-Using howmebrew:
+Using homebrew:
 ```SHELL
 brew install mkcert
 brew install nss # if you use Firefox
