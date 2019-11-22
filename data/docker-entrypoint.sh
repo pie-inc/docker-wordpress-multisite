@@ -217,7 +217,7 @@ EOPHP
 fi
 
 if [ -z "${WORDPRESS_LOCAL_DEV+x}" ] && [ ! -f backup.htaccess ]; then
-  wp core is-installed || wp core multisite-install --skip-config --title="test" --admin_email="joao.lopes@test.com"
+  wp core is-installed || wp core multisite-install --skip-config --title="test" --admin_email="<EMAIL>"
   mv .htaccess backup.htaccess
   mv multisite.htaccess .htaccess
   wp search-replace "/blog/%year%/%monthnum%/%day%/%postname%/" "blog/%postname%" wp_options

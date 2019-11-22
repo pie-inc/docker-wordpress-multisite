@@ -35,6 +35,8 @@ A few folders and files will be created inside ```./data``` for debugging, mainl
 Go through the famous 5-minute wordpress instalation by going to ```http://localhost:8080```
 
 ### Enabling multisite
+In line `220` or `data/docker-entrypoint.sh`, update the email section to the admin email.
+
 Jump into the wordpress container, enable multisite with WP-CLI and update the .htaccess, making a backup of the original.
 
 ```SHELL
