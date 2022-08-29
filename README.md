@@ -1,4 +1,6 @@
-> :warning: ** PHP 7.3 + Webpack version moved to [webpack branch](/pie-inc/docker-wordpress-multisite/tree/webpack) ** The 7.4 version theme makes use of Vite, so there are breaking updates to current developments!
+> :warning: PHP 7.3 + Webpack version moved to [webpack branch](/pie-inc/docker-wordpress-multisite/tree/webpack) -- The 7.4 version theme makes use of Vite, so there are breaking updates to current developments!
+
+> :warning: master branch changed to main
 
 # Docker WordPress Multisite
 - [Docker WordPress Multisite](#docker-wordpress-multisite)
