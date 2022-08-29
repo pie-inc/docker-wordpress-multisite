@@ -1,0 +1,10 @@
+{
+  "wp-content/themes/test/src/test.js": {
+    "file": "main.js",
+    "src": "wp-content/themes/test/src/test.js",
+    "isEntry": true,
+    "css": [
+      "main.css"
+    ]
+  }
+}

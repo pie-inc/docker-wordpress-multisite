@@ -56,9 +56,10 @@ brew install nss # if you use Firefox
 mkcert -install
 ```
 
-Then, you will have to generate the Certificates
+Then, you will have to generate the Certificates and dh parameters
 ```SHELL
 mkcert localhost 127.0.0.1 ::1
+openssl dhparam -out dh.pem 2066
 ```
 
 And finally copy the certificates from the mentioned location in the terminal into ```./data/certs/```
