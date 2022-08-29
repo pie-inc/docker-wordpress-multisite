@@ -1,3 +1,5 @@
+> :warning: *PHP 7.3 + Webpack version moved to [webpack branch](/pie-inc/docker-wordpress-multisite/tree/webpack) ** The 7.4 version theme makes use of Vite, so there are breaking updates to current developments!
+
 # Docker WordPress Multisite
 - [Docker WordPress Multisite](#docker-wordpress-multisite)
   - [Pre-requisites](#pre-requisites)
@@ -56,12 +58,14 @@ brew install nss # if you use Firefox
 mkcert -install
 ```
 
-Then, you will have to generate the Certificates
+Then, you will have to generate the Certificates and dh parameters
 ```SHELL
 mkcert localhost 127.0.0.1 ::1
+openssl dhparam -out dh.pem 2066
 ```
 
 And finally copy the certificates from the mentioned location in the terminal into ```./data/certs/```
+nginx expects the files to have the following naming structure: `dh.pem ssl.crt ssl.key`. The nomenclature can be updated at `data/nginx/wordpress.conf`
 
 You can also generate your own, or use existing ones you might have. 
 ([Using openSSL](https://www.openssl.org/docs/manmaster/man1/openssl-req.html))
