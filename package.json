@@ -9,6 +9,7 @@
     "stop": "docker-compose down --remove-orphans",
     "dev": "NODE_ENV=development vite build --watch",
     "build": "vite build",
+    "multisite:enable": "docker-compose exec wp sh -c 'wp core multisite-convert && mv .htaccess backup.htaccess'",
     "reset": "rm -rf ./data/mysql/.db"
   },
   "license": "MIT",
