@@ -1,11 +1,10 @@
-version: "2"
 services:
   wp:
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8083:80"
     volumes:
       - ./wp-content/plugins:/var/www/html/wp-content/plugins:rw
       - ./wp-content/themes:/var/www/html/wp-content/themes:rw
@@ -35,22 +34,22 @@ services:
     networks:
       - test-network
 
-  nginx:
-    image: nginx:alpine
-    restart: always
-    ports:
-      - "8081:80"
-      - "443:443"
-    depends_on:
-      - wp
-    volumes:
-      - ./data/nginx/wordpress.conf:/etc/nginx/conf.d/default.conf
-      - ./data/certs:/etc/nginx/certs/
-      - ./data/nginx/log:/var/log/nginx/
-      - ./data/wordpress:/var/www/html
-      - ./wp-content:/var/www/html/wp-content:rw
-    networks:
-      - test-network
+  # nginx:
+  #   image: nginx:alpine
+  #   restart: always
+  #   ports:
+  #     - "8081:80"
+  #     - "443:443"
+  #   depends_on:
+  #     - wp
+  #   volumes:
+  #     - ./data/nginx/wordpress.conf:/etc/nginx/conf.d/default.conf
+  #     - ./data/certs:/etc/nginx/certs/
+  #     - ./data/nginx/log:/var/log/nginx/
+  #     - ./data/wordpress:/var/www/html
+  #     - ./wp-content:/var/www/html/wp-content:rw
+  #   networks:
+  #     - test-network
 networks:
   test-network:
     driver: bridge

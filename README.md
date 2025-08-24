@@ -7,11 +7,9 @@
   - [Pre-requisites](#pre-requisites)
   - [Getting started](#getting-started)
     - [Enabling multisite](#enabling-multisite)
-    - [local SSL Certificates](#local-ssl-certificates)
+    - [using SSL locally](#using-ssl-locally)
   - [FAQ](#faq)
     - [Does it work immediately?](#does-it-work-immediately)
-    - [What if I don't want to use SSL?](#what-if-i-dont-want-to-use-ssl)
-    - [I'd like to start fresh, what do I do?](#id-like-to-start-fresh-what-do-i-do)
     - [This is not working properly in Windows... Help!](#this-is-not-working-properly-in-windows-help)
 
 ## Pre-requisites
@@ -50,8 +48,9 @@ mv .htaccess backup.htaccess
 mv multisite.htaccess .htaccess
 ```
 
-### local SSL Certificates
-You will need install makecert.
+### using SSL locally
+You'll have to enable nginx in the `docker-compose.yml` file, by removing the comment characters.
+Next, you will need install makecert.
 
 Using homebrew:
 ```SHELL
@@ -69,18 +68,12 @@ openssl dhparam -out dh.pem 2066
 And finally copy the certificates from the mentioned location in the terminal into ```./data/certs/```
 nginx expects the files to have the following naming structure: `dh.pem ssl.crt ssl.key`. The nomenclature can be updated at `data/nginx/wordpress.conf`
 
-You can also generate your own, or use existing ones you might have. 
+You can also generate your own, or use existing ones you might have.
 ([Using openSSL](https://www.openssl.org/docs/manmaster/man1/openssl-req.html))
 
 ## FAQ
 ### Does it work immediately?
 Nope.
-
-### What if I don't want to use SSL?
-You have to change quite a few settings, like the nginx configuration file.
-
-### I'd like to start fresh, what do I do?
-Type ```npm run reset``` or ```yarn reset``` and voilà!
 
 ### This is not working properly in Windows... Help!
 Although it might work in Windows, I have only used this process in *NIX machines. Some commands might have to be altered in `package.json` to adapt for proper Windows usage.
